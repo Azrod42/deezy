@@ -1,0 +1,4 @@
+<div class="topbar">
+  <p *ngIf="userData" class="wcmback">Welcome back {{userData.displayName}}!</p>
+  <div class="logout" (click)="onClick()">Logout</div>
+</div>
