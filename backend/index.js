@@ -15,7 +15,7 @@ const port = process.env.PORT;
 const db = initDB()
 
 app.use(cors({
-    origin: 'http://localhost:4200',
+    origin: process.env.FRONT,
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true
 }));

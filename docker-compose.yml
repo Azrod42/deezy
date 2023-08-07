@@ -1,41 +1,41 @@
 version: '3.8'
 # -=-=-=-=-=-=-=-=-=-=VOLUMES=-=-=-=-=-=-=-=-=-=-
 volumes:
-  data:
+  data_deezy:
 # -=-=-=-=-=-=-=-=-=-=NETWORKS=-=-=-=-=-=-=-=-=-=-
 networks:
-  backend:
+  backend_deezy:
     ipam:
       config:
         - subnet: 172.23.0.0/16
 services:
   # -=-=-=-=-=-=-=-=-=-=FRONTEND=-=-=-=-=-=-=-=-=-=-
-  front:
+  front_deezy:
     volumes:
       - ./frontend:/app
     build:
       context: ./frontend
       dockerfile: ./front.dockerfile
-    container_name: frontend
+    container_name: frontend_deezy
     ports:
       - "4200:4200"
     restart: unless-stopped
     networks:
-      - backend
+      - backend_deezy
     depends_on:
-      - back
+      - back_deezy
   # -=-=-=-=-=-=-=-=-=-=BACKEND=-=-=-=-=-=-=-=-=-=-
-  back:
+  back_deezy:
     volumes:
       - ./backend:/app
     build:
       context: ./backend
       dockerfile: ./back.dockerfile
-    container_name: backendD
+    container_name: backend_deezy
     ports:
       - "8080:8080"
     env_file:
       - ./backend/.env
     restart: unless-stopped
     networks:
-      - backend
+      - backend_deezy
