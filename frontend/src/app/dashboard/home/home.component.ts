@@ -16,6 +16,34 @@ export class HomeComponentD {
 
 
   @Input() searchData: any[] = [];
+  @Input() trending: any[] | null = null;
+
+  trendingData: any[] | null = null;
+  breakpoint: any = 1;
+
+  async ngOnInit() {
+    this.breakpoint = (window.innerWidth <= 430) ? 1 : 2;
+    let data: any = await axios.get(`${environment.backURL}/trending`, {withCredentials: true});
+    if (data) {
+      data = data?.data;
+      const trendingList = [];
+      for (let i = 0; i < 10; i++) {
+        trendingList.push({
+          id: data?.tracks.data[i]['id'],
+          title: data?.tracks.data[i]['title'],
+          img: data?.tracks.data[i]['album']['cover_medium'],
+          artist: data?.tracks.data[i]['artist']['name']
+        })
+        this.trendingData = trendingList;
+        this.trending = trendingList;
+      }
+    }
+  }
+
+  onResize(event: any) {
+    this.breakpoint = (event.target.innerWidth <= 430) ? 1 : 2;
+  }
+
   async onSearch(input: string) {
     let inputEl = (<HTMLInputElement>document.getElementById("inputSearch"));
     if (inputEl)
@@ -23,19 +51,20 @@ export class HomeComponentD {
     if (input !== '') {
       const searchResult = await axios.post(`${environment.backURL}/search`, {input} ,{withCredentials: true});
       const data = searchResult.data.data
-      //console.log(searchResult);
       if (data) {
+        this.trending = null;
         this.searchData = [];
         for (let i = 0; data[i]; i++) {
           this.searchData.push({title: data[i]?.title, artist: data[i]?.artist.name, duration: data[i]?.duration, id: data[i]?.id.toString()});
         }
-        //console.log(this.searchData);
       }
+    } else {
+      this.searchData = [];
+      this.trending = this.trendingData;
     }
   }
 
   onClickSound(id: string) {
-    //console.log(id);
     this.router.navigate([`/dashboard/song/${id}`])
   }
 

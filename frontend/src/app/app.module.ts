@@ -9,7 +9,10 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { TopbarComponent } from './component/topbar/topbar.component';
 import {HomeComponentD} from "./dashboard/home/home.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import { SongComponent } from './dashboard/song/song.component';
+import { SongComponent } from './dashboard/song/song.component'
+import {MatGridListModule} from '@angular/material/grid-list';
+import {NgOptimizedImage} from "@angular/common";
+
 
 @NgModule({
   declarations: [
@@ -25,7 +28,9 @@ import { SongComponent } from './dashboard/song/song.component';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatGridListModule,
+    NgOptimizedImage
   ],
   providers: [],
   bootstrap: [AppComponent]

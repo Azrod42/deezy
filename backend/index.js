@@ -115,6 +115,11 @@ app.post('/search',await authorization, async (req, res) => {
     }
 });
 
+app.get('/trending',await authorization, async (req, res) => {
+    const searchResult = await axios.get(`https://api.deezer.com/playlist/3155776842`);
+    return res.send(searchResult.data);
+});
+
 app.post('/song',await authorization, async (req, res) => {
     if (req.body.id) {
         const searchResult = await axios.get(`https://api.deezer.com/track/${req.body.id}`);
